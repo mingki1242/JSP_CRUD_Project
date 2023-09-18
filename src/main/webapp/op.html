@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>사칙 연산 계산기</title>
+  <script>
+    function validateForm() {
+      var num1 = document.forms["calculator"]["num1"].value;
+      var num2 = document.forms["calculator"]["num2"].value;
+
+      if (num1 === "" || num2 === "") {
+        alert("숫자 입력칸이 하나라도 비어있으면 안돼요!");
+        return false;
+      }
+    }
+  </script>
+</head>
+<body>
+<div align="center">
+  <h2>사칙 연산 계산기</h2>
+  <hr>
+  <form method="get" action="op" name="calculator" onsubmit="return validateForm()">
+    <table>
+      <tr>
+        <td><input type="text" name="num1"></td>
+        <td>
+          <select name="operator">
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+          </select>
+        </td>
+        <td><input type="text" name="num2"></td>
+        <td><input type="submit" value="계산"></td>
+      </tr>
+    </table>
+  </form>
+</div>
+</body>
+</html>
