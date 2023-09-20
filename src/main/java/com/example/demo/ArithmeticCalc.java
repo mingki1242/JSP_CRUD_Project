@@ -1,4 +1,4 @@
-//package com.example.demo;
+package com.example.demo;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -51,7 +51,7 @@ public class ArithmeticCalc extends HttpServlet {
                    sb.append("<html><body><h2>").append("나눗셈 연산시 분모에 0은 입력 될 수 없습니다!!");
                    sb.append("<br>");
                    sb.append("<br>");
-                   sb.append("<br> <a href = localhost:8080/chap1/op.html> 다시 계산 </a>");
+                   sb.append("<br> <a href = localhost:8081/op.html> 다시 계산 </a>");
                    sb.append("</h2></body></html>");
                    out.println(sb.toString());
                    return;
