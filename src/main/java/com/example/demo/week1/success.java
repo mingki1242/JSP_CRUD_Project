@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.week1;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -57,8 +57,8 @@ public class success extends HttpServlet {
         sb.append("중간고사 : ").append(request.getParameter("middle")).append("<br>");
         sb.append("기말고사 : ").append(request.getParameter("final")).append("<br>");
         sb.append("레포트 : ").append(request.getParameter("report")).append("<br>");
-        sb.append("출석 : ").append(request.getParameter("attendence")).append("<p>");
-        sb.append("총점 : ").append(request.getParameter("total")).append("<p>");
+        sb.append("출석 : ").append(request.getParameter("attendance")).append("<p>");
+        sb.append("총점 : ").append(request.getAttribute("total")).append("<p>");
 
         sb.append("</body></html>");
         out.println(sb.toString());

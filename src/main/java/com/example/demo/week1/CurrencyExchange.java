@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.week1;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -11,16 +11,21 @@ import java.io.PrintWriter;
 
 @WebServlet("/ex")
 public class CurrencyExchange extends HttpServlet {
-    private static final long serialVersionUID = 1L;
     public CurrencyExchange(){
         super();
     }
+    private static final long serialVersionUID = 1L;
     private static final double wonUSD = 1340.02;
     private static final double wonJapan = 9.0406;
     private static final double wonEUR = 1428.84;
     private static final double wonChina = 183.26;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
@@ -28,6 +33,8 @@ public class CurrencyExchange extends HttpServlet {
 
 
         int won = Integer.parseInt(request.getParameter("won"));
+        System.out.println(won);
+
         sb.append("<html><body>");
         sb.append("<h2> 변환 결과 : </h2>");
         switch (request.getParameter("unit"))
@@ -47,13 +54,8 @@ public class CurrencyExchange extends HttpServlet {
 
         }
 
-        sb.append("<a href = \"exchage.html\"> 다시 계산 </a>");
+        sb.append("<a href = \"exchange.html\"> 다시 계산 </a>");
         sb.append("</body></html>");
         out.println(sb.toString());
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doGet(request, response);
     }
 }

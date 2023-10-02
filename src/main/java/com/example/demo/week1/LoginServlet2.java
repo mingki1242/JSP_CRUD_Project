@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.week1;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -11,6 +11,7 @@ import java.io.PrintWriter;
 
 @WebServlet("/login2")
 public class LoginServlet2 extends HttpServlet {
+
     private static final long serialVersionUID = 1L;
 
     /**
