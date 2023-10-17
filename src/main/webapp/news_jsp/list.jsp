@@ -21,7 +21,7 @@
             for(NewsVO news : newslist) {
         %>
         <tr>
-            <td><%=news.getTitle()%></td> <td><%=news.getWriter()%></td> <td><%=news.getRegdate()%></td> <td><%=news.getRegdate()%></td>
+            <td><a href = "news/read.do?id=<%=news.getId()%>"> <%=news.getTitle()%></a></td> <td><%=news.getWriter()%></td> <td><%=news.getRegdate()%></td> <td><%=news.getReadcnt()%></td>
         </tr>
         <%
             }
