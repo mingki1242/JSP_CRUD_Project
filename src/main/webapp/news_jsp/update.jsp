@@ -13,7 +13,7 @@
 <form method="post" action = "update.fin">
     <input type="hidden" name="id" value="<%=currentNews.getId()%>">
     기자 : <input type = "text" name = "writer" value = <%=currentNews.getWriter()%>> <br>
-    제목 : <input type = "text" name = "title" value = <%= currentNews.getTitle()%>> <br>
+    제목 : <input type = "text" name = "title" value = "<%= currentNews.getTitle()%>"> <br>
     내용 : <textarea name="body" rows="5" cols="40"><%=currentNews.getBody()%></textarea> <br>
     <input type = "submit" value="수정">
     <a href="/news">취소</a>

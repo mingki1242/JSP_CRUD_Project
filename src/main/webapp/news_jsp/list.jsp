@@ -1,5 +1,9 @@
 <%@ page import="com.example.demo.news.NewsVO" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.time.LocalDateTime" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -21,7 +25,18 @@
             for(NewsVO news : newslist) {
         %>
         <tr>
-            <td><a href = "news/read.do?id=<%=news.getId()%>"> <%=news.getTitle()%></a></td> <td><%=news.getWriter()%></td> <td><%=news.getRegdate()%></td> <td><%=news.getReadcnt()%></td>
+            <td><a href = "news/read.do?id=<%=news.getId()%>"> <%=news.getTitle()%></a></td> <td><%=news.getWriter()%></td>
+            <td>
+                <%
+                    LocalDateTime regDate = news.getRegdate();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                    String formattedDate = regDate.format(formatter);
+                %>
+                <%= formattedDate %>
+
+
+            </td>
+            <td><%=news.getReadcnt()%></td>
         </tr>
         <%
             }

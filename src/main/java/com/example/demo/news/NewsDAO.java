@@ -52,7 +52,7 @@ public class NewsDAO {
                 news.setReadcnt(rs.getInt("readcnt"));
                 news.setTitle(rs.getString("title"));
                 news.setWriter(rs.getString("writer"));
-                news.setRegdate(rs.getDate("regdate"));
+                news.setRegdate(rs.getTimestamp("regdate").toLocalDateTime());
                 news.setBody(rs.getString("body"));
                 newslist.add(news);
             }
@@ -99,16 +99,16 @@ public class NewsDAO {
                 article.setId(response.getInt("id"));
                 article.setTitle(response.getString("title"));
                 article.setWriter(response.getString("writer"));
-                article.setRegdate(response.getDate("regdate"));
+                article.setRegdate(response.getTimestamp("regdate").toLocalDateTime());
                 article.setReadcnt(response.getInt("readcnt"));
                 article.setBody(response.getString("body"));
             }
 
         } catch (SQLException e) {
-            // 예외 처리 코드
+
             e.printStackTrace();
         } finally {
-            // 리소스 해제
+
             if (response != null) {
                 try {
                     response.close();
@@ -149,9 +149,9 @@ public class NewsDAO {
             updatecount = pstmt.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace(); // 예외 처리 추가
+            e.printStackTrace();
         } finally {
-            // 리소스 해제
+
             disconnect();
         }
         return updatecount;
