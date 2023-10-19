@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("/login2")
+@WebServlet("/userinfo")
 public class LoginServlet2 extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
