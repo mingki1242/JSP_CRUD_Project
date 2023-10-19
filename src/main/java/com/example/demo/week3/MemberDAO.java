@@ -62,4 +62,83 @@ public class MemberDAO {
         }
         return list;
     }
+
+    public void insertMember(MemberVO member)
+    {
+        connect();
+        String sql = "INSERT into member(name , email , password , regdate) values (?,?,?,?)";
+        try{
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1 , member.getName());
+            pstmt.setString(2 , member.getEmail());
+            pstmt.setString(3 , member.getPassword());
+            pstmt.setString(4 , member.getRegdate());
+            pstmt.executeUpdate();
+        }catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+    }
+
+    public MemberVO getMemberByid(int id)
+    {
+        connect();
+        String sql = "select * from member where ID = ?";
+        MemberVO member = null;
+        try{
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1,id);
+            ResultSet rs = pstmt.executeQuery();
+            if(rs.next())
+            {
+                member = new MemberVO();
+                member.setId(rs.getInt("id"));
+                member.setEmail(rs.getString("email"));
+                member.setPassword(rs.getString("password"));
+                member.setName(rs.getString("name"));
+                member.setRegdate(rs.getString("regdate"));
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+        return member;
+    }
+
+    public void deleteMember(int id)
+    {
+        connect();
+        String sql = "DELETE from member where id = ?";
+        try
+        {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1 , id);
+            pstmt.executeUpdate();
+        }catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+    }
+
+    public void updateMember(MemberVO member)
+    {
+        connect();
+        String sql = "UPDATE member SET name = ? , email = ? , password = ? , regdate = ? where id=?";
+        try
+        {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1 , member.getName());
+            pstmt.setString(2 , member.getEmail());
+            pstmt.setString(3 , member.getPassword());
+            pstmt.setString(4 , member.getRegdate());
+            pstmt.executeUpdate();
+        }catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+    }
 }

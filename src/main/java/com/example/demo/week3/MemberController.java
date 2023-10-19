@@ -46,11 +46,49 @@ public class MemberController extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         response.setContentType("text/html;charset=utf-8");
         String action = request.getPathInfo();
+
         System.out.println("action: " + action);
         if (action == null || action.equals("/listMembers.do")) {
             List<MemberVO> memberList = memberDAO.listMembers();
             request.setAttribute("memberList", memberList);
             nextPage = "/week3/listMembers.jsp";
+        }
+        else if (action.equals("/insertReq.do"))
+        {
+            nextPage = "/week3/insert.jsp";
+        }
+        else if(action.equals("insert.do"))
+        {
+            MemberVO reg_member = new MemberVO();
+            reg_member.setEmail(request.getParameter("email"));
+            reg_member.setName(request.getParameter("name"));
+            reg_member.setRegdate(request.getParameter("regdate"));
+            reg_member.setPassword(request.getParameter("password"));
+            memberDAO.insertMember(reg_member);
+            response.sendRedirect("/");
+        }
+        else if(action.equals("/updateReq.do"))
+        {
+            int id = Integer.parseInt(request.getParameter("id"));
+            MemberVO member = memberDAO.getMemberByid(id);
+            request.setAttribute("member" , member);
+            nextPage = "/week3/update.jsp";
+        }
+        else if(action.equals("/delete.do"))
+        {
+            int id = Integer.parseInt(request.getParameter("id"));
+            memberDAO.deleteMember(id);
+            response.sendRedirect("/");
+        }
+        else if(action.equals("/update.do"))
+        {
+            MemberVO reg_member = new MemberVO();
+            reg_member.setEmail(request.getParameter("email"));
+            reg_member.setName(request.getParameter("name"));
+            reg_member.setRegdate(request.getParameter("regdate"));
+            reg_member.setPassword(request.getParameter("password"));
+            reg_member.setId(Integer.parseInt(request.getParameter("id")));
+            memberDAO.insertMember(reg_member);
         }
 
         RequestDispatcher dispatch = request.getRequestDispatcher(nextPage);
