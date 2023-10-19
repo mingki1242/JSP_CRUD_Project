@@ -34,7 +34,8 @@
                     for (MemberVO member : memberList) {
                 %>
                 <tr>
-                    <a href = "/member/updateReq.do?id=<%=member.getId()%>"> <td><%=member.getName() %> </td>
+                    <td><a href = "/member/updateReq.do?id=<%=member.getId()%>"/><%=member.getId()%></td>
+                    <td><%=member.getName() %> </td>
                     <td><%=member.getPassword() %> </td> <td><%=member.getEmail() %> </td>
                     <td><%=member.getRegdate() %></td>
                 </tr>

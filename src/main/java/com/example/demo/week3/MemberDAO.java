@@ -134,6 +134,7 @@ public class MemberDAO {
             pstmt.setString(2 , member.getEmail());
             pstmt.setString(3 , member.getPassword());
             pstmt.setString(4 , member.getRegdate());
+            pstmt.setInt(5,  member.getId());
             pstmt.executeUpdate();
         }catch (Exception e) {
             e.printStackTrace();

@@ -48,6 +48,7 @@ public class MemberController extends HttpServlet {
         String action = request.getPathInfo();
 
         System.out.println("action: " + action);
+
         if (action == null || action.equals("/listMembers.do")) {
             List<MemberVO> memberList = memberDAO.listMembers();
             request.setAttribute("memberList", memberList);
@@ -57,7 +58,7 @@ public class MemberController extends HttpServlet {
         {
             nextPage = "/week3/insert.jsp";
         }
-        else if(action.equals("insert.do"))
+        else if(action.equals("/insert.do"))
         {
             MemberVO reg_member = new MemberVO();
             reg_member.setEmail(request.getParameter("email"));
@@ -65,7 +66,10 @@ public class MemberController extends HttpServlet {
             reg_member.setRegdate(request.getParameter("regdate"));
             reg_member.setPassword(request.getParameter("password"));
             memberDAO.insertMember(reg_member);
-            response.sendRedirect("/");
+
+            List<MemberVO> memberList = memberDAO.listMembers();
+            request.setAttribute("memberList", memberList);
+            nextPage = "/week3/listMembers.jsp";
         }
         else if(action.equals("/updateReq.do"))
         {
@@ -78,17 +82,23 @@ public class MemberController extends HttpServlet {
         {
             int id = Integer.parseInt(request.getParameter("id"));
             memberDAO.deleteMember(id);
-            response.sendRedirect("/");
+            List<MemberVO> memberList = memberDAO.listMembers();
+            request.setAttribute("memberList", memberList);
+            nextPage = "/week3/listMembers.jsp";
         }
         else if(action.equals("/update.do"))
         {
-            MemberVO reg_member = new MemberVO();
-            reg_member.setEmail(request.getParameter("email"));
-            reg_member.setName(request.getParameter("name"));
-            reg_member.setRegdate(request.getParameter("regdate"));
-            reg_member.setPassword(request.getParameter("password"));
-            reg_member.setId(Integer.parseInt(request.getParameter("id")));
-            memberDAO.insertMember(reg_member);
+            MemberVO member = new MemberVO();
+            member.setEmail(request.getParameter("email"));
+            member.setName(request.getParameter("name"));
+            member.setRegdate(request.getParameter("regdate"));
+            member.setPassword(request.getParameter("password"));
+            member.setId(Integer.parseInt(request.getParameter("id")));
+            memberDAO.updateMember(member);
+
+            List<MemberVO> memberList = memberDAO.listMembers();
+            request.setAttribute("memberList", memberList);
+            nextPage = "/week3/listMembers.jsp";
         }
 
         RequestDispatcher dispatch = request.getRequestDispatcher(nextPage);
