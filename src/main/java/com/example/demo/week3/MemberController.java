@@ -101,6 +101,7 @@ public class MemberController extends HttpServlet {
             nextPage = "/week3/listMembers.jsp";
         }
 
+
         RequestDispatcher dispatch = request.getRequestDispatcher(nextPage);
         dispatch.forward(request, response);
     }

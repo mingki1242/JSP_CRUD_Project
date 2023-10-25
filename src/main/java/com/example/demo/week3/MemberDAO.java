@@ -142,4 +142,30 @@ public class MemberDAO {
             disconnect();
         }
     }
+
+    public MemberVO getMemberByEmail(String email)
+    {
+        connect();
+        String sql = "select * from member where email = ?";
+        MemberVO member = null;
+        try{
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1,email);
+            ResultSet rs = pstmt.executeQuery();
+            if(rs.next())
+            {
+                member = new MemberVO();
+                member.setId(rs.getInt("id"));
+                member.setEmail(rs.getString("email"));
+                member.setPassword(rs.getString("password"));
+                member.setName(rs.getString("name"));
+                member.setRegdate(rs.getString("regdate"));
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+        return member;
+    }
 }
