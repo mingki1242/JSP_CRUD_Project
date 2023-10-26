@@ -123,25 +123,7 @@ public class MemberDAO {
         }
     }
 
-    public void updateMember(MemberVO member)
-    {
-        connect();
-        String sql = "UPDATE member SET name = ? , email = ? , password = ? , regdate = ? where id=?";
-        try
-        {
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1 , member.getName());
-            pstmt.setString(2 , member.getEmail());
-            pstmt.setString(3 , member.getPassword());
-            pstmt.setString(4 , member.getRegdate());
-            pstmt.setInt(5,  member.getId());
-            pstmt.executeUpdate();
-        }catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            disconnect();
-        }
-    }
+
 
     public MemberVO getMemberByEmail(String email)
     {
@@ -167,5 +149,24 @@ public class MemberDAO {
             disconnect();
         }
         return member;
+    }
+
+    public void updateMember(MemberVO member) {
+        connect();
+        String sql = "update member set password = ? where id = ?";
+        try{
+            pstmt = conn.prepareStatement(sql);
+
+//            pstmt.setString(1, member.getName());
+//            pstmt.setString(2,member.getEmail());
+//            pstmt.setString(3,member.getRegdate());
+            pstmt.setString(1,member.getPassword());
+            pstmt.setInt(2,member.getId());
+            pstmt.executeUpdate();
+        }catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
     }
 }

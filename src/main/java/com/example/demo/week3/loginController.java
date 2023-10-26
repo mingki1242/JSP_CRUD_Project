@@ -9,7 +9,6 @@ import java.util.HashMap;
 
 @WebServlet("/login/*")
 public class loginController extends HttpServlet {
-
     private static final long serialVersionUID = 1L;
     MemberDAO memberDAO;
 
@@ -21,15 +20,13 @@ public class loginController extends HttpServlet {
     }
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doHandle(request,response);
+        doHandle(request , response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doHandle(request,response);
+        doHandle(request, response);
     }
-
-
 
     private void doHandle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String nextPage = null;
@@ -54,30 +51,30 @@ public class loginController extends HttpServlet {
                 String password = request.getParameter("password");
                 HashMap<String , Boolean> errors = new HashMap<>();
                 request.setAttribute("errors" , errors);
-                if(email == null || email.isEmpty())
+                if(email ==null || email.isEmpty())
                 {
                     errors.put("email" , true);
                 }
-                if(password == null || password.isEmpty())
+                if(password ==null || password.isEmpty())
                 {
                     errors.put("password" , true);
                 }
-
                 if(!errors.isEmpty())
                 {
                     nextPage = "/week3/login.jsp";
                 }
-
-                else{
-                    MemberVO member = memberDAO.getMemberByEmail(email);
-                    if(!password.equals(member.getPassword()))
+                else {
+                    MemberVO member;
+                    member = memberDAO.getMemberByEmail(email);
+                    if(password.equals(member.getPassword()))
                     {
-                        errors.put("notMatch" , true);
-                        nextPage = "/week3/login.jsp";
+                        HttpSession session = request.getSession(false);
+                        session.setAttribute("userAuth" , member);
+                        nextPage = "/week3/index.jsp";
                     }
                     else {
-                        request.getSession().setAttribute("authUser" , member);
-                        nextPage = "/week3/index.jsp";
+                        errors.put("notMatch" , true);
+                        nextPage = "/week3/login.jsp";
                     }
                 }
             }
@@ -85,6 +82,7 @@ public class loginController extends HttpServlet {
         else if(action.equals("/logout.do"))
         {
             HttpSession session = request.getSession(false);
+            session.getAttribute("userAuth");
             if(session != null)
             {
                 session.invalidate();
@@ -95,46 +93,40 @@ public class loginController extends HttpServlet {
         {
             if(request.getMethod().equalsIgnoreCase("GET"))
             {
-                nextPage = "/week3/changePassword.jsp";
+                nextPage = "/week3/changepwd.jsp";
             }
             else {
+                String current_pass = request.getParameter("current_pass");
+                String changefin_pass = request.getParameter("changefin_pass");
+                HashMap<String , Boolean> errors = new HashMap<>();
+                request.setAttribute("errors" , errors);
                 HttpSession session = request.getSession(false);
-                MemberVO member = (MemberVO) session.getAttribute("authUser");
-
-                if(member == null)
+                MemberVO member = (MemberVO) session.getAttribute("userAuth");
+                if(current_pass == null || current_pass.isEmpty())
                 {
-                    nextPage = "/week3/index.jsp";
+                    errors.put("currentpass" , true);
                 }
-                HashMap<String , Boolean> error = new HashMap<>();
-                String currentpwd = request.getParameter("cpass");
-                String newpwd = request.getParameter("npass");
-                request.setAttribute("error" , error);
-                if(currentpwd == null || currentpwd.isEmpty())
+                if(changefin_pass == null || changefin_pass.isEmpty())
                 {
-                    error.put("currentpwd" , true);
+                    errors.put("changefinpass" , true);
                 }
-                if(newpwd ==null || newpwd.isEmpty())
+                if(!errors.isEmpty())
                 {
-                    error.put("newpwd" , true);
-                }
-                if(!error.isEmpty())
-                {
-                    nextPage = "/week3/changePassword.jsp";
+                    nextPage = "/week3/changepwd.jsp";
                 }
                 else {
-                    if(currentpwd.equals(member.getPassword()))
+
+                    if(current_pass.equals(member.getPassword()))
                     {
-                        member.setPassword(newpwd);
+                        member.setPassword(changefin_pass);
                         memberDAO.updateMember(member);
-                        error.put("success" , true);
-                        nextPage = "/week3/changePassword.jsp";
+                        nextPage = "/week3/index.jsp";
                     }
                     else {
-                        error.put("notmatch" , true);
-                        nextPage = "/week3/changePassword.jsp";
+                        errors.put("notMatch" , true);
+                        nextPage = "/week3/changepwd.jsp";
                     }
                 }
-
             }
         }
 
